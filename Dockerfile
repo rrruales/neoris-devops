@@ -1,4 +1,4 @@
-FROM openjdk:17-alpine
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4-1194
 
 RUN addgroup -g 1000 tmpusrgp
 RUN adduser -u 1000 -G tmpusrgp -h /home/tmpusr -D tmpusr
@@ -6,11 +6,10 @@ USER tmpusr
 RUN mkdir -p /home/tmpusr/app
 WORKDIR /home/tmpusr/app
 
-COPY --chown=tmpusr:tmpusrgp *.jar .
+COPY --chown=tmpusr:tmpusrgp target/*-runner ./app
 
-EXPOSE 8000
-ENTRYPOINT [ "java" ]
-CMD [ "-jar", "demo-0.0.1.jar", "--server.address=0.0.0.0", "--server.port=8000" ]
+EXPOSE 8080
+CMD [ "./app", "-Dquarkus.http.host=0.0.0.0" ]
 
 HEALTHCHECK --interval=30s --timeout=30s --retries=3 \
-    CMD curl -f http://localhost:8000/api/actuator/health || exit 1
+    CMD curl -f http://localhost:8080/q/health || exit 1
