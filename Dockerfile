@@ -5,9 +5,9 @@ RUN groupadd -g 1000 tmpusrgp
 RUN useradd -u 1000 -g tmpusrgp -d /home/tmpusr -m tmpusr
 USER tmpusr
 RUN mkdir -p /home/tmpusr/app
-WORKDIR /home/tmpusr/app
 
-COPY --chown=tmpusr:tmpusrgp tddexample-1.0.0-SNAPSHOT-runner ./
+COPY --chown=tmpusr:tmpusrgp tddexample-1.0.0-SNAPSHOT-runner /home/tmpusr/app
+WORKDIR /home/tmpusr/app
 
 EXPOSE 8080
 CMD ["./tddexample-1.0.0-SNAPSHOT-runner", "-Dquarkus.http.host=0.0.0.0"]
