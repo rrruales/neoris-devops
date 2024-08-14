@@ -1,7 +1,7 @@
 FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4-1194
 
-RUN addgroup -g 1000 tmpusrgp
-RUN adduser -u 1000 -G tmpusrgp -h /home/tmpusr -D tmpusr
+RUN groupadd -g 1000 tmpusrgp
+RUN useradd -u 1000 -G tmpusrgp -h /home/tmpusr -D tmpusr
 USER tmpusr
 RUN mkdir -p /home/tmpusr/app
 WORKDIR /home/tmpusr/app
