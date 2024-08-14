@@ -75,7 +75,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: rolo96/devsu
+          images: rolo96/neoris
           tags: |
             type=raw,value=${{ env.SHORT_SHA }},priority=100
       - name: Build and Push Docker Image
