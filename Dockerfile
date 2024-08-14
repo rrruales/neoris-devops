@@ -7,7 +7,7 @@ USER tmpusr
 RUN mkdir -p /home/tmpusr/app
 WORKDIR /home/tmpusr/app
 
-COPY --chown=tmpusr:tmpusrgp *-runner ./app
+COPY --chown=tmpusr:tmpusrgp tddexample-1.0.0-SNAPSHOT-runner ./app
 
 EXPOSE 8080
 CMD [ "./app", "-Dquarkus.http.host=0.0.0.0" ]
