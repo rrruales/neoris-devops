@@ -9,6 +9,8 @@ RUN mkdir -p /home/tmpusr/app
 COPY --chown=tmpusr:tmpusrgp tddexample-1.0.0-SNAPSHOT-runner /home/tmpusr/app
 WORKDIR /home/tmpusr/app
 
+RUN chmod +x /home/tmpusr/app/tddexample-1.0.0-SNAPSHOT-runner
+
 EXPOSE 8080
 CMD ["./tddexample-1.0.0-SNAPSHOT-runner", "-Dquarkus.http.host=0.0.0.0"]
 
