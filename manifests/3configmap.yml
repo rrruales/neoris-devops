@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: neoris-configmap
+  namespace: neoris
+  labels:
+    app: neoris
+data:
+  PORT: "8000"
+  USERNAME_DB: postgres
+  URL_DB: localhost

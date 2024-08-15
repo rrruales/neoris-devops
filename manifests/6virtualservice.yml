@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: neoris-vs
+  namespace: neoris
+spec:
+  gateways:
+    - istio-ingress/api-gateway
+  hosts:
+    - '*'
+  http:
+    - match:
+        - uri:
+            prefix: /DevOps
+        - uri:
+            prefix: /jwt/generate
+      route:
+        - destination:
+            host: neoris-svc.neoris.svc.cluster.local
+            port:
+              number: 80

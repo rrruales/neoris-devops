@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neoris-deploy
+  namespace: neoris
+  labels:
+    app: neoris
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: neoris
+  template:
+    metadata:
+      labels:
+        app: neoris
+    spec:
+      volumes:
+        - name: neoris-secret
+          secret:
+            secretName: neoris-secret
+      containers:
+        - name: neoris-container
+          image: rolo96/neoris:{{COMMIT}}
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          envFrom:
+          - secretRef:
+              name: neoris-secret
+          - configMapRef:
+              name: neoris-configmap
+          livenessProbe:
+            httpGet:
+              path: /q/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /q/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 20
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3  
+          imagePullPolicy: IfNotPresent
+        - name: postgres
+          image: postgres:15
+          ports:
+          - containerPort: 5432
+          env:
+          - name: POSTGRES_DB
+            value: postgres
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: postgres
+        
