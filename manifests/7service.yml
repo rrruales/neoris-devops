@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: neoris-svc
+  namespace: neoris
+  labels:
+    app: neoris
+spec:
+  selector:
+    app: neoris
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  type: NodePort
