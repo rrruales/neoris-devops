@@ -13,7 +13,7 @@ jobs:
         uses: graalvm/setup-graalvm@v1.2.1
         with:
           java-version: "17"
-          distribution: "graalvm" # optional, default is
+          distribution: "graalvm" 
           native-image-job-reports: "true"
           cache: "maven"
       - name: Generate Native Image
@@ -35,7 +35,7 @@ jobs:
           name: Build File
           path: |
             target/*-runner
-            target/site/jacoco/jacoco.xml
+            target/jacoco-report/jacoco.xml
 
   unit_tests:
     runs-on: ubuntu-latest
