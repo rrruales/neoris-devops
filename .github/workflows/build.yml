@@ -16,9 +16,14 @@ jobs:
           distribution: "graalvm" # optional, default is
           native-image-job-reports: "true"
           cache: "maven"
-      - name: Generate Native Image
+    #   - name: Generate Native Image
+    #     run: |
+    #       mvn package -Dnative -DskipTests
+      - name: Build Project
         run: |
-          mvn package -Dnative -DskipTests
+          mvn clean test -Dquarkus.test.coverage=true
+          ls -la
+          ls -la target
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2.3.0
         env:
