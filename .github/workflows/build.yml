@@ -37,21 +37,21 @@ jobs:
             target/*-runner
             target/jacoco-report/jacoco.xml
 
-  unit_tests:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v4
-      - name: GitHub Action for GraalVM
-        uses: graalvm/setup-graalvm@v1.2.1
-        with:
-          java-version: "17"
-          distribution: "graalvm" # optional, default is
-          native-image-job-reports: "true"
-          cache: "maven"
-      - name: Generate Native Image
-        run: |
-          mvn test
+  # unit_tests:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: GitHub Action for GraalVM
+  #       uses: graalvm/setup-graalvm@v1.2.1
+  #       with:
+  #         java-version: "17"
+  #         distribution: "graalvm" # optional, default is
+  #         native-image-job-reports: "true"
+  #         cache: "maven"
+  #     - name: Generate Native Image
+  #       run: |
+  #         mvn test
 
   docker_image:
     name: Push Docker image to Docker Hub
