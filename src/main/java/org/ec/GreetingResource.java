@@ -36,7 +36,7 @@ public class GreetingResource {
         jwt.getClaimNames();
         if (validateJWT(request.getHeader("X-JWT-KWY"))) {
             PojoOut response = new PojoOut();
-            response.message = "Hello " + requestPojo.to + " your message will be send";
+            response.message = "Hello " + requestPojo.to + " tu mensaje sera enviado ahora";
             return Response.ok(response).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Unauthorized").build();
