@@ -41,7 +41,7 @@ jobs:
         with:
           name: Build File
           path: |
-            target/tddexample-1.0.0-SNAPSHOT-native-image-source-jar/*-runner
+            target/*-runner
             target/jacoco-report/jacoco.xml
 
   unit_tests:
