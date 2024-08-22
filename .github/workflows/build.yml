@@ -16,21 +16,21 @@ jobs:
           distribution: "graalvm" 
           native-image-job-reports: "true"
           cache: "maven"
+      - name: Coverage Test
+        run: |
+          mvn clean test -Dquarkus.test.coverage=true
+          ls -la
+          ls -la target
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2.3.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
       - name: Generate Native Image
         run: |
           mvn package -Dnative -DskipTests
           ls -la
           ls -la target
-      - name: Build Project
-        run: |
-          mvn clean test -Dquarkus.test.coverage=true
-          ls -la
-          ls -la target
-      # - name: SonarCloud Scan
-      #   uses: SonarSource/sonarcloud-github-action@v2.3.0
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #     GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
