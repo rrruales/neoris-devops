@@ -19,6 +19,8 @@ jobs:
       - name: Generate Native Image
         run: |
           mvn package -Dnative -DskipTests
+          ls -la
+          ls -la target
       - name: Build Project
         run: |
           mvn clean test -Dquarkus.test.coverage=true
