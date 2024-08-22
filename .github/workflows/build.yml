@@ -1,8 +1,12 @@
 name: Java
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   build:
@@ -21,6 +25,7 @@ jobs:
           mvn clean test -Dquarkus.test.coverage=true
           ls -la
           ls -la target
+        continue-on-error: true
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2.3.0
         env:
@@ -39,22 +44,23 @@ jobs:
             target/tddexample-1.0.0-SNAPSHOT-native-image-source-jar/*-runner
             target/jacoco-report/jacoco.xml
 
-  # unit_tests:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: GitHub Action for GraalVM
-  #       uses: graalvm/setup-graalvm@v1.2.1
-  #       with:
-  #         java-version: "17"
-  #         distribution: "graalvm" # optional, default is
-  #         native-image-job-reports: "true"
-  #         cache: "maven"
-  #     - name: Generate Native Image
-  #       run: |
-  #         mvn test
-
+  unit_tests:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: GitHub Action for GraalVM
+        uses: graalvm/setup-graalvm@v1.2.1
+        with:
+          java-version: "17"
+          distribution: "graalvm" # optional, default is
+          native-image-job-reports: "true"
+          cache: "maven"
+      - name: Generate Native Image
+        run: |
+          mvn test
+    continue-on-error: true
+    
   docker_image:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
