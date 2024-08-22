@@ -30,7 +30,7 @@ public class Security {
 
     @Transactional
     public String generateJWT(String request){
-        Instant instantExpiresAt = Instant.now().plusSeconds(10);
+        Instant instantExpiresAt = Instant.now().plusSeconds(20);
         String jwt =Jwt.upn(request)
         .groups("WEB")
         .expiresAt(instantExpiresAt).sign();
